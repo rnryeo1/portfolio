@@ -1,7 +1,7 @@
 
 
 
-블랙박스 루트제작 알고리즘 핵심 소스 및 설명 및 스레드 정리
+ 루트제작 알고리즘 핵심 소스 및 설명 및 스레드 정리
 1.경로의 처음(드라이브경로, A, B, C드라이브등) m_bRootDir 변수로 표현합니다.
 2.pdr, cdr, avi, 디렉토리 파일만 보이게 합니다.
 3. 경로를 타서 들어갈 수록 m_CurrentDir 는 경로 이름이 계속 더해집니다.그리고 이전 경로를 저장해둡니다.
@@ -32,7 +32,7 @@ UINT CMyDeanUIView::RunMakeTimeThread(LPVOID pParam)
 
 
 
-블랙박스 루트제작 알고리즘 핵심 소스
+루트제작 알고리즘 핵심 소스
 
 void Computer::OnDblclkList1(NMHDR* pNMHDR, LRESULT* pResult)
 {
