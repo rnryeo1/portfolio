@@ -196,6 +196,214 @@ void Computer::OnDblclkList1(NMHDR* pNMHDR, LRESULT* pResult)
 
 }
 
+	
+	
+	
+
+	
+UINT Computer::RunThread(LPVOID pParam)
+{
+	Computer* g_pDlg = (Computer*)pParam;
+
+	CFileFind finder;
+
+	TCHAR currentDir[256];
+
+	int ch, drive, curdrive;
+	static char path[_MAX_PATH];
+
+	BOOL bWorking = finder.FindFile(g_pDlg->m_CurrentDir + _T("\\*.*"));
+
+	CString fileName;
+
+	LVITEM item;
+
+	int i1 = 0;
+	int j1 = 0;
+	int k1 = 1;
+
+	int nDrive = 0;
+	int index;
+	bool bAscending = true;
+
+	CString strSel;
+	int i = g_pDlg->m_ListView1.GetNextItem(-1, LVNI_SELECTED);
+	if(i >= 0)
+		strSel = g_pDlg->m_ListView1.GetItemText(i, 0);
+
+	g_pDlg->m_ListView1.DeleteAllItems();
+	g_pDlg->m_PlayList.RemoveAll();
+	g_pDlg->m_DirList.RemoveAll();
+
+	
+
+	if (!g_pDlg->m_bRootDir) {
+
+		// 루트가 아니면, 무조건 ".." 추가한다.
+		item.iImage = 1;									//DIROUT
+		item.mask = LVIF_TEXT | LVIF_PARAM | LVIF_IMAGE;
+		item.iItem = 0;
+		item.iSubItem = 0;
+		item.pszText = _T("..");
+		index = g_pDlg->m_ListView1.InsertItem(&item);
+		g_pDlg->m_ListView1.SetItemData(index, 1);
+
+		BOOL bWorking = finder.FindFile(g_pDlg->m_CurrentDir + _T("\\*.*"));
+
+		while (bWorking) {
+
+			bWorking = finder.FindNextFile();
+
+			TRACE("%d, %d, %d, %d, %d, %d, %d, %d, {%s}\n",
+				finder.IsNormal(), finder.IsArchived(), finder.IsSystem(), finder.IsHidden(), finder.IsCompressed(), finder.IsTemporary(), finder.IsReadOnly(), finder.IsDirectory(),
+				finder.GetFileName());
+
+			fileName = finder.GetFileName();
+
+			if (finder.IsDots()) {	// "." 과 ".."은 무시
+				continue;
+			}
+			else if (finder.IsArchived()) {
+
+				if (strstr(fileName, ".CDR") != NULL || strstr(fileName, ".cdr") != NULL ||
+					strstr(fileName, ".PDR") != NULL || strstr(fileName, ".pdr") != NULL ||
+					strstr(fileName, ".AVI") != NULL || strstr(fileName, ".avi") != NULL) {
+
+					item.iImage = 2;
+					item.mask = LVIF_TEXT | LVIF_PARAM | LVIF_IMAGE;
+					item.iItem = 0;
+					item.iSubItem = 0;
+					item.pszText = fileName.GetBuffer(0);
+					index = g_pDlg->m_ListView1.InsertItem(&item);
+					g_pDlg->m_ListView1.SetItemData(index, 2);
+
+					CLIST clist;
+					clist.type = 2;
+					clist.path = fileName.GetBuffer(0);
+					if (clist.type == 2)
+						g_pDlg->m_PlayList.Add(clist);
+
+					g_pDlg->videoCount++;
+				}
+			}
+
+			//현상태 && finder.IsDirectory() 제거 및 !!finder.IsReadOnly() 제거
+			else if (!finder.IsSystem() && !finder.IsHidden() && !finder.IsCompressed() && !finder.IsTemporary()
+				 /*&& !finder.IsReadOnly()*//* && finder.IsDirectory()*/
+				&& !finder.IsNormal() && !finder.IsSerializable()) {
+				item.iImage = 1;
+				item.mask = LVIF_TEXT | LVIF_PARAM | LVIF_IMAGE;
+				item.iItem = 0;
+				item.iSubItem = 0;
+				item.pszText = fileName.GetBuffer(0);
+				index = g_pDlg->m_ListView1.InsertItem(&item);
+
+				g_pDlg->m_ListView1.SetItemData(index, 1);
+
+				CLIST clist;
+				clist.type = 1;
+				clist.path = fileName.GetBuffer(0);
+				if (clist.type == 1)
+					g_pDlg->m_DirList.Add(clist);
+			}
+		}
+
+		qsort((void*)g_pDlg->m_PlayList.GetData(), g_pDlg->m_PlayList.GetSize(), sizeof(CLIST), g_pDlg->Compare);
+		qsort((void*)g_pDlg->m_DirList.GetData(), g_pDlg->m_DirList.GetSize(), sizeof(CLIST), g_pDlg->Compare);
+		g_pDlg->m_ListView1.DeleteAllItems();
+
+		item.iImage = 1;
+		item.mask = LVIF_TEXT | LVIF_PARAM | LVIF_IMAGE;
+		item.iItem = 0;
+		item.iSubItem = 0;
+		item.pszText = LPSTR(LPCTSTR(".."));
+		*item.pszText;
+		item.pszText;
+		g_pDlg->m_ListView1.InsertItem(&item);
+
+		for (int b = 0; b < g_pDlg->m_DirList.GetCount(); b++)
+		{
+			item.iImage = 1; //dirout
+
+			item.mask = LVIF_TEXT | LVIF_PARAM | LVIF_IMAGE;
+			item.iItem = b + 1; //0;
+			item.iSubItem = 0;
+			item.pszText = LPSTR(LPCTSTR(g_pDlg->m_DirList.GetAt(b).path));
+			*item.pszText;
+			item.pszText;
+			index = g_pDlg->m_ListView1.InsertItem(&item);
+			g_pDlg->m_ListView1.SetItemData(index, 1);
+			//g_pDlg->m_ListView1.InsertItem(&item);
+			k1++;
+		}
+		for (int a = 0; a < g_pDlg->m_PlayList.GetCount(); a++)
+		{
+			item.iImage = 2; //cdr
+			item.mask = LVIF_TEXT | LVIF_PARAM | LVIF_IMAGE;
+			item.iItem = k1 + 1 + a; //0;
+			item.iSubItem = 0;
+			item.pszText = LPSTR(LPCTSTR(g_pDlg->m_PlayList.GetAt(a).path));
+			*item.pszText;
+			item.pszText;
+			index = g_pDlg->m_ListView1.InsertItem(&item);
+			g_pDlg->m_ListView1.SetItemData(index, 2);
+			//g_pDlg->m_ListView1.InsertItem(&item);
+
+		}
+	}
+	else {
+		if (g_pDlg->m_idirDepthCnt == 0) {
+			CFileFind finder;
+
+			char szDriveBuf[256] = { 0, };
+			UINT nCount = GetLogicalDriveStrings(256, szDriveBuf);
+			char* pBufIndex = szDriveBuf;
+			CString localcurrentDriveDir;
+			LVITEM item;
+			for (int i = 0; i < nCount / 4; i++)
+			{
+				CString cBufIndex = (LPCSTR)(LPSTR)pBufIndex;
+				BOOL bWorking = finder.FindFile(cBufIndex + _T("*.*"));
+				BOOL finded = false;
+
+				while (bWorking) {
+					bWorking = finder.FindNextFile();
+
+					if (finder.IsArchived() || finder.IsDirectory()) {
+						g_pDlg->DriveStringArr[i] = pBufIndex;
+						finded = true;
+					}
+				}
+				if (finded)
+				{
+					item.iImage = 5; //Drive
+					item.mask = LVIF_TEXT | LVIF_PARAM | LVIF_IMAGE;
+					item.iItem = i; //0;
+					item.iSubItem = 0;
+					item.pszText = LPSTR(LPCTSTR(g_pDlg->DriveStringArr[i]));
+					index = g_pDlg->m_ListView1.InsertItem(&item);
+					g_pDlg->m_ListView1.SetItemData(index, 0);
+					finded = false;
+				}
+				pBufIndex += 4;
+			}
+
+			g_pDlg->m_idirDepthCnt = 0;
+		}
+	}
+
+	g_pDlg->m_bRun = false;
+	g_pDlg->m_pThread = NULL;
+	g_pDlg->m_bFileClicked = true;
+	Sleep(250); //만약 오류생길경우 on_play에서..
+	g_pDlg->m_bDirChanged = true;  //파일정리된 후 
+
+	return 0;
+}
+	
+	
+	
+	
 MFC는 사용자 인터페이스 스레드와 작업자 스레드라는 두 가지 유형의 스레드를 구분한다.
 사용자 인터페이스 스레드 개체의 예로는 MFC의 메인 스레드인 CWinApp가 있다.
 작업자 스레드는 백그라운드 작업이나 유지 관리 작업에 적합하다.
