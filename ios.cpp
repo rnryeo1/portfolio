@@ -1,12 +1,12 @@
-3) ios async, platenum, send, recv, ÀÌ·ĞÁ¤¸®µî.
-IOS Data ÁÖ°í¹Ş±â ¹× IOSÀÇ UI Update ¹æ¹ı(async)À» Á¤¸®
+3) ios async, platenum, send, recv, ì´ë¡ ì •ë¦¬ë“±.
+IOS Data ì£¼ê³ ë°›ê¸° ë° IOSì˜ UI Update ë°©ë²•(async)ì„ ì •ë¦¬
 
 func parseGetPlateNumber(_ data : [UInt8] ) {
     print("\(WHAT_CLASS):\(#function):\(#line)")
         let simple = CNSPlateNumberSetting.init(bytes: data)
         if simple.resultbyte < 0 {
             print("\(WHAT_CLASS):\(#function):\(#line) set wifi password failed")
-                showPopup(NSLocalizedString("NOTIFY", comment: "¾È³»"), NSLocalizedString("PN_CHANGE_ERROR", comment: "Wi-Fi ºñ¹Ğ¹øÈ£ º¯°æÀ» ½ÇÆĞÇß½À´Ï´Ù."))
+                showPopup(NSLocalizedString("NOTIFY", comment: "ì•ˆë‚´"), NSLocalizedString("PN_CHANGE_ERROR", comment: "Wi-Fi ë¹„ë°€ë²ˆí˜¸ ë³€ê²½ì„ ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤."))
         }
         else {
             isPassError = true
@@ -52,7 +52,7 @@ func parseGetPlateNumber(_ data : [UInt8] ) {
 
 }
 
-¼±¾ğ
+ì„ ì–¸
 protocol DReceiveDelegate{
     func onDReceive(_ res : Int)
 }
@@ -79,14 +79,14 @@ func onReceive(_ cmd : UInt16, _ size : Int, _ data : [UInt8] , _ ext : UInt8, _
         return 0
 }
 
-//µ¥ÀÌÅÍ¹Ş¾Æ¼­ ¼Â.
+//ë°ì´í„°ë°›ì•„ì„œ ì…‹.
 func parseSetPlateNumber(_ data : [UInt8] ) {
     print("\(WHAT_CLASS):\(#function):\(#line)")
         let simple = CNSPlateNumberSetting.init(bytes: data)
 
         if simple.resultbyte < 0 {
             print("\(WHAT_CLASS):\(#function):\(#line) set wifi password failed")
-                showPopup(NSLocalizedString("NOTIFY", comment: "¾È³»"), NSLocalizedString("PN_CHANGE_ERROR", comment: "Wi-Fi ºñ¹Ğ¹øÈ£ º¯°æÀ» ½ÇÆĞÇß½À´Ï´Ù."))
+                showPopup(NSLocalizedString("NOTIFY", comment: "ì•ˆë‚´"), NSLocalizedString("PN_CHANGE_ERROR", comment: "Wi-Fi ë¹„ë°€ë²ˆí˜¸ ë³€ê²½ì„ ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤."))
 
         }
         else {
@@ -109,11 +109,11 @@ func setRecDelegate(_ delegate: ReceiveDelegate ? ) {
     self.recDelegate = delegate
 }
 
-let appDelegate = UIApplication.shared.delegate as!AppDelegate //Shared º¯¼ö 
-var tcpclient : TCPC = TCPC() //¼­¹öÅë½Å 
+let appDelegate = UIApplication.shared.delegate as!AppDelegate //Shared ë³€ìˆ˜ 
+var tcpclient : TCPC = TCPC() //ì„œë²„í†µì‹  
 appDelegate.tcpclient.send(NetDefs.NAT_CMD_FACTORY_RESET, nil, 10)
 
-//byteµ¥ÀÌÅÍ ¹ŞÀ½.
+//byteë°ì´í„° ë°›ìŒ.
 if self.recDelegate != nil{
                     if self.recDelegate!.onReceive(unCmd, nSize, byteData, byteEXT, byteCRC) < 0 {
                     }
@@ -127,11 +127,11 @@ if self.recDelegate != nil{
 DispatchQueue.main.async{
     self.progressBarViewController.progressCur.doubleValue = Double(frameCntCur)
     self.progressBarViewController.progressAll.doubleValue = Double(frameCntAll)
-    self.progressBarViewController.labelProcessing2._string_Value = "\(NSLocalizedString("PROCESSING", comment: "ÁøÇà Áß")).. \(processPer)% (\(fileCntCurRef.pointee)/\(fileCntMax))"
+    self.progressBarViewController.labelProcessing2._string_Value = "\(NSLocalizedString("PROCESSING", comment: "ì§„í–‰ ì¤‘")).. \(processPer)% (\(fileCntCurRef.pointee)/\(fileCntMax))"
 }
 
 DispatchQueue.main.async{
                     self.present(_alert_, animated: false, completion : nil)
 }
-
+ 
 
