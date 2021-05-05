@@ -1,44 +1,47 @@
-// À©¼Ó ÃÊ±âÈ­
+
+ì„œë²„ ê¸°ë³¸ì§€ì‹ íŒ¨í‚· ë³´ë‚´ëŠ” ê²ƒ ì •ë¦¬
+
+// ìœˆì† ì´ˆê¸°í™”
 WSADATA  wsa;
 int retval;
-if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)	//2.2¹öÀü
+if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)	//2.2ë²„ì „
 return 1;
 //Socket
-SOCKET tcp_sock = socket(AF_INET, SOCK_STREAM, 0); //¼ÒÄÏ»ı¼º
+SOCKET tcp_sock = socket(AF_INET, SOCK_STREAM, 0); //ì†Œì¼“ìƒì„±
 if (tcp_sock == INVALID_SOCKET) err_quit("socket()");
 //connect 
 SOCKADDR_IN serveradddr;
 ZeroMemory(&serveradddr, sizeof(serveradddr));
 serveradddr.sin_family = AF_INET;
-serveradddr.sin_addr.s_addr = inet_addr(SERVERIP);	//ipÁÖ¼Ò¸¦ ¹®ÀÚ·Îº¯È¯
-serveradddr.sin_port = htons(SERVERPORT);	//È£½ºÆ® ÁÖ¼Ò¿¡¼­ ³×Æ®¿öÅ© ÁÖ¼Ò·Î º¯È¯ ,Æ÷Æ®¹øÈ£(Åë½Å°æ·Î ¼³Á¤)
-retval = connect(tcp_sock, (SOCKADDR*)&serveradddr,  //¼­¹öÁÖ¼Ò¿Í ¿¬°á
-	sizeof(serveradddr)); //¼­¹ö¿¡  ¿¬°á
+serveradddr.sin_addr.s_addr = inet_addr(SERVERIP);	//ipì£¼ì†Œë¥¼ ë¬¸ìë¡œë³€í™˜
+serveradddr.sin_port = htons(SERVERPORT);	//í˜¸ìŠ¤íŠ¸ ì£¼ì†Œì—ì„œ ë„¤íŠ¸ì›Œí¬ ì£¼ì†Œë¡œ ë³€í™˜ ,í¬íŠ¸ë²ˆí˜¸(í†µì‹ ê²½ë¡œ ì„¤ì •)
+retval = connect(tcp_sock, (SOCKADDR*)&serveradddr,  //ì„œë²„ì£¼ì†Œì™€ ì—°ê²°
+	sizeof(serveradddr)); //ì„œë²„ì—  ì—°ê²°
 
 if (retval == SOCKET_ERROR) err_quit("connect()");
-// µ¥ÀÌÅÍ Åë½Å¿¡ »ç¿ëÇÒ º¯¼ö 
+// ë°ì´í„° í†µì‹ ì— ì‚¬ìš©í•  ë³€ìˆ˜ 
 char buf[500 + 1];
 int len;
-WaitRoom* waitroom = new WaitRoom(); //±¸Á¶Ã¼Á¤º¸¸¦ »ı¼ºÇÏ°í °ª´ëÀÔ
+WaitRoom* waitroom = new WaitRoom(); //êµ¬ì¡°ì²´ì •ë³´ë¥¼ ìƒì„±í•˜ê³  ê°’ëŒ€ì…
 waitroom->current_player = 1;
 waitroom->max_player = 4;
 waitroom->room_state = 3;
 int roombuf = 0;
-// ¼­¹ö¿Í µ¥ÀÌÅÍ Åë½Å
-int maxCnt = 1; //º¸³»´ÂÈ¸¼ö
+// ì„œë²„ì™€ ë°ì´í„° í†µì‹ 
+int maxCnt = 1; //ë³´ë‚´ëŠ”íšŒìˆ˜
 while (1) {
-	//// µ¥ÀÌÅÍ ÀÔ·Â
-	//printf("\n[º¸³¾ µ¥ÀÌÅÍ] ");
+	//// ë°ì´í„° ì…ë ¥
+	//printf("\n[ë³´ë‚¼ ë°ì´í„°] ");
 	//if (fgets(buf, BUFSIZE + 1, stdin) == NULL)
 	//break;
-	//// '\n' ¹®ÀÚ Á¦°Å
+	//// '\n' ë¬¸ì ì œê±°
 	//len = strlen(buf);
 	//if (buf[len - 1] == '\n')
 	//buf[len - 1] = '\0';
 	//if (strlen(buf) == 0)
 	//break;
-	// µ¥ÀÌÅÍ º¸³»±â
-	retval = send(tcp_sock, (char*)waitroom, sizeof(WaitRoom), 0);  //±¸Á¶Ã¼º¯¼ö¸¦ ¼­¹ö¿¡ º¸³½´Ù. tcp connect
+	// ë°ì´í„° ë³´ë‚´ê¸°
+	retval = send(tcp_sock, (char*)waitroom, sizeof(WaitRoom), 0);  //êµ¬ì¡°ì²´ë³€ìˆ˜ë¥¼ ì„œë²„ì— ë³´ë‚¸ë‹¤. tcp connect
 	if (retval == SOCKET_ERROR) {
 		err_display("send()");
 		break;
@@ -48,11 +51,11 @@ while (1) {
 		break;
 	}
 
-	retval = bind(listen_sock, (SOCKADDR*)&serveraddr, sizeof(serveraddr));	//bind ·Î server address¸¦  ¼ÒÄÏ°ú ¹­¾îÁØ´Ù.
+	retval = bind(listen_sock, (SOCKADDR*)&serveraddr, sizeof(serveraddr));	//bind ë¡œ server addressë¥¼  ì†Œì¼“ê³¼ ë¬¶ì–´ì¤€ë‹¤.
 	if (retval == SOCKET_ERROR) err_quit("bind()");
-	retval = listen(listen_sock, SOMAXCONN);	 //¼ÒÄÏÀÌ listen »óÅÂ·Î µé¾î°£´Ù.
+	retval = listen(listen_sock, SOMAXCONN);	 //ì†Œì¼“ì´ listen ìƒíƒœë¡œ ë“¤ì–´ê°„ë‹¤.
 	if (retval == SOCKET_ERROR) err_quit("listen()");
-	// µ¥ÀÌÅÍ Åë½Å¿¡ »ç¿ëÇÒ º¯¼ö
+	// ë°ì´í„° í†µì‹ ì— ì‚¬ìš©í•  ë³€ìˆ˜
 	SOCKET client_sock;
 	SOCKADDR_IN clientaddr;
 	int addrlen;
@@ -60,15 +63,15 @@ while (1) {
 	while (1) {
 		// accept()
 		addrlen = sizeof(clientaddr);
-		client_sock = accept(listen_sock, (SOCKADDR*)&clientaddr, &addrlen); // Å¬¶óÀÇ connect ¸¦ accept ÇØÁØ´Ù. ÀÌ¶§(accept) Åë½Å¿ë ¼ÒÄÏÀÌ ÇÏ³ª´õ ¸¸µé¾îÁø´Ù´Â Á¡¿¡ ÁÖÀÇÇÑ´Ù.
+		client_sock = accept(listen_sock, (SOCKADDR*)&clientaddr, &addrlen); // í´ë¼ì˜ connect ë¥¼ accept í•´ì¤€ë‹¤. ì´ë•Œ(accept) í†µì‹ ìš© ì†Œì¼“ì´ í•˜ë‚˜ë” ë§Œë“¤ì–´ì§„ë‹¤ëŠ” ì ì— ì£¼ì˜í•œë‹¤.
 		if (client_sock == INVALID_SOCKET) {
 			err_display("accept()");
 			break;
 		}
-		//Á¢¼ÓÇÑ Å¬¶óÀÌ¾ğÆ® Á¤º¸ Ãâ·Â
-		printf("\n[TCP ¼­¹ö] Å¬¶óÀÌ¾ğÆ® Á¢¼Ó: IP ÁÖ¼Ò=%s, Æ÷Æ® ¹øÈ£=%d\n",
+		//ì ‘ì†í•œ í´ë¼ì´ì–¸íŠ¸ ì •ë³´ ì¶œë ¥
+		printf("\n[TCP ì„œë²„] í´ë¼ì´ì–¸íŠ¸ ì ‘ì†: IP ì£¼ì†Œ=%s, í¬íŠ¸ ë²ˆí˜¸=%d\n",
 			inet_ntoa(clientaddr.sin_addr), ntohs(clientaddr.sin_port));
-		hThread = CreateThread(NULL, 0, ProcessClient, (LPVOID)client_sock, 0, NULL); ///ProcessClient ¶ó´Â ÀÌ¸§ÀÇ ¾²·¹µå ÇÔ¼ö¸¦ ¸¸µé¾î ¾²·¹µå¸¦ µ¹¸°´Ù.
+		hThread = CreateThread(NULL, 0, ProcessClient, (LPVOID)client_sock, 0, NULL); ///ProcessClient ë¼ëŠ” ì´ë¦„ì˜ ì“°ë ˆë“œ í•¨ìˆ˜ë¥¼ ë§Œë“¤ì–´ ì“°ë ˆë“œë¥¼ ëŒë¦°ë‹¤.
 		if (hThread == NULL) { closesocket(client_sock); }
 		else { CloseHandle(hThread); }
 	}
@@ -78,3 +81,26 @@ while (1) {
 	return 0;
 
 
+====================================================================================================================================
+07 db,sql,js ì„œë²„ìª½ ì½”ë“œ ì„œë²„ í´ë¼ ë¶„ë¦¬ë‚´ìš© ì´í•´ë°  ì„¤ëª…ë¶€ë¶„ (ì„œë²„ í´ë¼ ë¶„ë¦¬ ì—°ê²° ì´í•´ê³¼ì •)	
+	
+	App.post(â€nameâ€,function(req,res){
+Dbconnect.getConnection(async function (conn){ //dbì—°ê²°
+	Var sql = â€œSelect cash,freecash,id, FROM userinfo WHERE userid
+	Var row = req[â€™bodyâ€™]
+	Var params= row[â€™user_idâ€™]
+	...
+	Var func = await func2(conn...)//ë™ê¸°í™”ë¥¼ ìœ„í•´ awaitë¥¼ í•œë‹¤.ë¬¼ë¡  future,promiseë“±ì˜ ë°©ë²•ì´ ìˆìœ¼ë‚˜ awaitì´ ë™ê¸°í™”ê°€ í¸í•˜ë‹¤ë¼ê³  ì§ì ‘ ì„œì¹˜ë¥¼í†µí•´ ì–»ì€ë‚´ìš©ì´ë‹¤.
+	....
+	Responsehelper.senddata(res,rows)//resultë¥¼ rowë¡œ í´ë¼ì— ë³´ë‚´ì¤€ë‹¤.
+	//sqlì— ë°ì´í„°ë¥¼ ë³´ë‚¸ë‹¤.
+	 ....
+Responsehelper.sendreturncode(res,1,0ë“±ë“±...)//ì •ë³´ë¥¼ ë³´ëƒˆë‹¤ëŠ” ì‹ í˜¸ë¥¼ ì„œë²„ê°€ ë³´ë‚´ë©´ 
+//í´ë¼ì´ì–¸íŠ¸ë‹¨ì—ì„œ ì½”ë“œë¥¼ ë°›ê³  í´ë¼ì´ì–¸íŠ¸ì—ì„œ ì²˜ë¦¬ë¥¼ í•˜ë©´ëœë‹¤.
+//ë§Œì•½ ì„œë²„ë‹¨ì—ì„œ 1ì„ ì„±ê³µì‹ í˜¸ë¡œ ë³´ë‚¸ë‹¤ë©´ 1ì„ ë³´ë‚´ê¸°ì „ sqlì—ì„œ ë°ì´í„°ë¥¼ ê°±ì‹ í•œë‹¤. ê°±ì‹ ë™ê¸°í™”ê°€ ëœí›„ì—
+//í´ë¼ì´ì–¸íŠ¸ì—ì„œ ì„œë²„ì¸¡ì—ì„œ ê°±ì‹ ëœdata(sqlì˜ê°’)ê°’ì„ ë°›ì•„ì˜¨ë‹¤. 
+
+====================================================================================================================================	
+	
+	
+	
