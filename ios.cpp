@@ -110,7 +110,7 @@ func setRecDelegate(_ delegate: ReceiveDelegate ? ) {
 }
 
 let appDelegate = UIApplication.shared.delegate as!AppDelegate //Shared 변수 
-var tcpclient : TCPC = TCPC() //서버통신 
+var tcpclient : TCPC = TCPC() //서버통신  
 appDelegate.tcpclient.send(NetDefs.NAT_CMD_FACTORY_RESET, nil, 10)
 
 //byte데이터 받음.
