@@ -54,7 +54,7 @@ void Computer::OnDblclkList1(NMHDR* pNMHDR, LRESULT* pResult)
 			m_idirDepthCnt += 1;   //
 			m_CurrentDirBefore = m_CurrentDir; //first before 
 		}
-		else
+		else 
 		{
 
 			if (m_idirDepthCnt >= 1) //c, c://blackbox
