@@ -610,4 +610,104 @@ BroadCastReceiver 의 역할은 단말기 안에서 이루어지는 수많은 �
             mContentStrategy = new ViewIdContentStrategy(viewId);
             return this;
         }		
-		
+==================================================================================================================
+						프로세스는 정적인 개념이고
+스레드는 동적이다 프로세스 안에서 돌아가는
+  mSock = new Socket(MainProtocol.SERVERIP, Define.SERVERPORT_VIDEO);
+            m_out_stream = new BufferedOutputStream(mSock.getOutputStream());// output stream
+            m_in_stream = mSock.getInputStream(); //input stream
+			m_in_stream 에서 읽기
+			 while (!eosReceived) {
+                //Log.d("mhhan", "IDR Frame 22");
+                try {
+                    if(bufferSize < bufferCap) {
+                        int readBytes = m_in_stream.read(readdata, bufferSize, bufferCap - bufferSize);
+                        //    Log.d("mhhan", "IDR Frame 33");
+                        bufferSize = bufferSize + readBytes;
+
+                        if(readBytes <= 0) {
+                            eosReceived = true;
+                        }
+                     //   Log.d("ㅇㅇ", "readdata readBytes 확인 : "+readBytes);
+                    }
+					synchronized : 단 하나의 쓰레드만 실행할 수 있는 메소드 또는 블록을 말한다.
+- 다른 쓰레드는 메소드나 블록이 실행이 끝날 때까지 대기해야 한다.
+- wait(), notify(), notifyAll() 은 동기화 메소드 또는 블록에서만 호출 가능한 Object의 메소드
+  두개의 쓰레드가 교대로 번갈아 가며 실행해야 할 경우에 주로 사용한다.
+  
+	//enque때 synchronized 부름
+					synchronized (mVideoQueueSync) {
+                                        //Log.d("mhhan", "확인14");
+                                        byte[] naluPacket = new byte[packetSize];
+
+                                        System.arraycopy(readdata, 0, naluPacket, 0, packetSize);
+
+                                        mVideoQueue.add(naluPacket);
+
+//										Message msg99 = handler99.obtainMessage();
+//										handler99.sendMessage(msg99);
+
+                                        //Log.d("mhhan", "push. nalu count = " + mVideoQueue.size());
+
+
+                                    }//}
+						System.arraycopy(readdata, packetSize, readdata, 0, bufferSize - packetSize);
+                                    bufferSize = bufferSize - packetSize;			
+
+
+스레드에서 deque 해준다.
+while(!eosReceived && !mConfigure) {
+//		Log.d("mhhan", "111");
+//		Log.d("mhhan", "eosReceived11 = " + eosReceived);
+//		Log.d("mhhan", "mConfigure11 = " + mConfigure);videodecoderthread
+
+		//deque때 synchronized 부름
+            synchronized (mVideoQueueSync) {
+
+                if(mVideoQueue.size() > 1) {
+
+                    mSps = mVideoQueue.get(0);
+                    mPps = mVideoQueue.get(1);
+
+                    Log.d("mhhan", "mSps = " + mSps.length);
+                    Log.d("mhhan", "mPps = " + mPps.length);
+
+                    if(mSps != null && mSps.length > 3 && mPps != null && mPps.length > 3 && 0x07 == (mSps[3] & 0x1F) && 0x08 == (mPps[3] & 0x1F)) {
+                        Log.d("mhhan", "IDR Frame setConfigure ");
+                        setConfigure(mSps, mPps);
+                    }
+                    else {
+                        mVideoQueue.remove(0);
+                    }
+                }
+            }
+
+
+        }
+
+디코더에서 하는일.
+mDecoder.configure(format, mSurface, null, 0);
+            mDecoder.start();
+			미디어 코덱에서 버퍼를 가져온다.
+		ByteBuffer[] inputBuffers = mDecoder.getInputBuffers();
+        @SuppressWarnings("deprecation")
+        ByteBuffer[] outputBuffers = mDecoder.getOutputBuffers();
+        ByteBuffer inputBuffer = null;	
+		 int outputBufferIndex = mDecoder.dequeueOutputBuffer(info, 0);
+		boolean doRender = (info.size != 0);
+        mDecoder.releaseOutputBuffer(outputBufferIndex, doRender); //present 기능이라고 한다.
+  Thread.sleep(1000); //override run 함수인데 이걸 부르는 스레드를 sleep한다.ㅇㅇ
+
+  
+  되는코드는 : mediaextractor에서 처리하는데 밑의 난해한 코드가 있다 돌려봐야 되는데 이게 싱크맞추는코드.
+  startWhen = System.currentTimeMillis()- (mExtractor.getSampleTime() / 1000);
+  long sleepTime = (info.presentationTimeUs / 1000)
+									- (System.currentTimeMillis() - startWhen);
+							if (sleepTime > 0)
+								Thread.sleep(sleepTime);
+
+
+
+
+
+....
