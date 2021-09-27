@@ -87,7 +87,7 @@ func parseSetPlateNumber(_ data : [UInt8] ) {
         if simple.resultbyte < 0 {
             print("\(WHAT_CLASS):\(#function):\(#line) set wifi password failed")
                 showPopup(NSLocalizedString("NOTIFY", comment: "안내"), NSLocalizedString("PN_CHANGE_ERROR", comment: "Wi-Fi 비밀번호 변경을 실패했습니다."))
-
+ 
         }
         else {
             print("\(String(format: "parseSetPlateNumber data.count = % d", data.count)) ")//13
