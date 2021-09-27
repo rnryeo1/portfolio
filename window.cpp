@@ -9,7 +9,7 @@
 path가 너무 길어지면 CString 변수가 그많은 string 데이터를 저장할 수 없기 떄문에 오류가 발생합니다.
 5. CWinThread* m_pThread; 변수를 생성  m_pThread = AfxBeginThread(RunThread, this);
 5-1. AfxBeginThread에서 RunThread라는 파일 읽기 쓰레드 생성을 한 후 백그라운드에서 실행 되게 한다. 작업자 스레드를 사용하여 멀티 스레드 환경에서 동작 하도록 한다.
-6. CWinThread* m_pMakeTimeThread; 
+6. CWinThread* m_pMakeTimeThread;  
  m_pMakeTimeThread = AfxBeginThread(RunMakeTimeThread, this);
 RunMakeTimeThread 함수는 파일읽기 함수 이기 때문에 쓰레드로 처리해야 한다.
 왜냐하면 메인쓰레드가 모두 처리할 경우 읽기 속도가 현저히 느려지기 때문이다.
