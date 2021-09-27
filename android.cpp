@@ -994,7 +994,7 @@ Looper는 각각의 MessageQueue를 가진다. 특히 메인 스레드에서는 
 
 quit() : 아직 처리되지 않은 Message를 모두 제거한다.
 quitSafely() : sendMessageDelayed() 등을 써서 실행 타임스탬프를 뒤로 미룬 지연 Message를 처리, quickSafely()
- 메서드를 실행하는 시점에 현재 시간보다 타임스탬프가
+ 메서드를 실행하는 시점에 현재 시간보다 타임스탬프가 
  뒤에 있는 Message를 제거 앞에 있는 Message는 계속해서 처리
 
 
