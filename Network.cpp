@@ -1,5 +1,6 @@
 
-서버 기본지식 패킷 보내는 것 정리
+Server Basic Knowledge Packet Sending
+
 
 // 윈속 초기화
 WSADATA  wsa;
