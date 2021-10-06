@@ -2,25 +2,25 @@
 Server Basic Knowledge Packet Sending
 
 
-// 윈속 초기화
+// Winsock reset
 WSADATA  wsa;
 int retval;
-if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)	//2.2버전
+if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)	//2.2version
 return 1;
 //Socket
-SOCKET tcp_sock = socket(AF_INET, SOCK_STREAM, 0); //소켓생성
+SOCKET tcp_sock = socket(AF_INET, SOCK_STREAM, 0); //socket creation
 if (tcp_sock == INVALID_SOCKET) err_quit("socket()");
 //connect 
 SOCKADDR_IN serveradddr;
 ZeroMemory(&serveradddr, sizeof(serveradddr));
 serveradddr.sin_family = AF_INET;
-serveradddr.sin_addr.s_addr = inet_addr(SERVERIP);	//ip주소를 문자로변환
-serveradddr.sin_port = htons(SERVERPORT);	//호스트 주소에서 네트워크 주소로 변환 ,포트번호(통신경로 설정)
-retval = connect(tcp_sock, (SOCKADDR*)&serveradddr,  //서버주소와 연결
-	sizeof(serveradddr)); //서버에  연결
+serveradddr.sin_addr.s_addr = inet_addr(SERVERIP);	//convert ip address to text
+serveradddr.sin_port = htons(SERVERPORT);	//Conversion from host address to network address, port number (set communication path)
+retval = connect(tcp_sock, (SOCKADDR*)&serveradddr,  //connection with server address
+	sizeof(serveradddr)); //connect to server
 
 if (retval == SOCKET_ERROR) err_quit("connect()");
-// 데이터 통신에 사용할 변수 
+// Variables to use for data communication 
 char buf[500 + 1];
 int len;
 WaitRoom* waitroom = new WaitRoom(); //구조체정보를 생성하고 값대입
@@ -83,7 +83,7 @@ while (1) {
 
 
 ====================================================================================================================================
-07 db,sql,js 서버쪽 코드 서버 클라 분리내용 이해및  설명부분 (서버 클라 분리 연결 이해과정)	
+07 db, sql, js server-side code Understanding and explaining the content of server-side separation (the process of understanding server-side separation and connection)
 	
 	App.post(”name”,function(req,res){
 Dbconnect.getConnection(async function (conn){ //db연결
@@ -97,10 +97,9 @@ Dbconnect.getConnection(async function (conn){ //db연결
 	//sql에 데이터를 보낸다.
 	 ....
 Responsehelper.sendreturncode(res,1,0등등...)//정보를 보냈다는 신호를 서버가 보내면 
-//클라이언트단에서 코드를 받고 클라이언트에서 처리를 하면된다.
-//만약 서버단에서 1을 성공신호로 보낸다면 1을 보내기전 sql에서 데이터를 갱신한다. 갱신동기화가 된후에
-//클라이언트에서 서버측에서 갱신된data(sql의값)값을 받아온다.  
-
+// Receive the code from the client side and process it at the client.
+//If the server side sends 1 as a success signal, the data is updated in sql before sending 1. After synchronization of update
+// Get the updated data (sql value) value from the server side from the client.
 ====================================================================================================================================	
 	
 	
