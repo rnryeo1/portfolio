@@ -1,12 +1,12 @@
-3) ios async, platenum, send, recv, 이론정리등.
-IOS Data 주고받기 및 IOS의 UI Update 방법(async)을 정리
+3) ios async, platenum, send, recv, theory theorem, etc.
+IOS data exchange and UI update method (async) of IOS are organized
 
 func parseGetPlateNumber(_ data : [UInt8] ) {
     print("\(WHAT_CLASS):\(#function):\(#line)")
         let simple = CNSPlateNumberSetting.init(bytes: data)
         if simple.resultbyte < 0 {
             print("\(WHAT_CLASS):\(#function):\(#line) set wifi password failed")
-                showPopup(NSLocalizedString("NOTIFY", comment: "안내"), NSLocalizedString("PN_CHANGE_ERROR", comment: "Wi-Fi 비밀번호 변경을 실패했습니다."))
+                showPopup(NSLocalizedString("NOTIFY", comment: "안내"), NSLocalizedString("PN_CHANGE_ERROR", comment: "Wi-Fi Password change failed."))
         }
         else {
             isPassError = true
@@ -137,31 +137,32 @@ DispatchQueue.main.async{
  
 
 ====================================================================================================================
-main()함수는 UIAppliationMain()함수를 호출하는데 이함수가 이벤트 루프를 처리하는 앱의핵심 컨트롤러이다
-실행되면 모든 기본적인 일은 UiKit 프레임워크가 처리하는데, 이 프레임워크가 UI를 보여주고 , 메인이벤트 루프를 시작한다.
-이루프를 도는동안 UIKit은 터치에 대한 노티피케이션 및 디바이스의 방향 변경등의 이벤트를 객체에게 보내서 처리하며,
-앱에서 요청한 명령들을 처리해준다. 홈버튼눌러서 종료할때 UIKit이 앱에게 통지하고 종료 처리한다.
+The main() function calls the UIAppliationMain() function, which is the app's core controller that handles the event loop.
+When executed, all the basic work is handled by the UiKit framework, which displays the UI and starts the main event loop.
+During the loop, UIKit processes events such as notification of touch and change of device orientation to the object.
+It processes the commands requested by the app. When the home button is pressed to quit, UIKit notifies the app and handles the shutdown.
 
-앱 델리게이트는 앱의 핵심 클래스로서메인 이벤트 루프로부터 메시지를 받는다. 그리고 아이폰 OS가 보내는 
-중요한 시스템 메시지들을 처리하는 책임을 가지고 있다.
-모든 아이폰 앱은 앱델리게이트 객체를 갖고있어야한다. 
-뷰 컨트롤러 클래스는 하나 또는 여러뷰를 생성하고 화면에 보여준다.
-이클래스는 또한 표준 시스템이벤트(예를 들어 디바이스의 방향이 바뀌는 등)에 대해서 앱이 처리해야할 일들을 수행하는
-델리게이트의 역할도 한다.
+The app delegate is the core class of the app and receives messages from the main event loop. and iOS sends
+It is responsible for handling important system messages.
+Every iPhone app should have an AppDelegate object.
+A view controller class creates and displays one or multiple views.
+This class also performs tasks that the app needs to handle in response to standard system events (such as device orientation change).
+It also acts as a delegate.
 
-@interface로 클래스 선언한다.
-@implementation 으로 클래스 정의한다. @end로 끝난다.
-@synthesize 키워드를 사용하여 클래스 인터페이스에서 선언한 프로퍼티 메소드들을 구현한다.
 
-객체형(Type) : id형은 Generic Type이다.
-@property 키워드를 사용해서 프로퍼티를 선언하면, 인스턴스 변수를 접근하기 위해서
-접근자 메소드를 일일이 선언하고 구현하는 지루한 반복작업을 하지 않아도 된다.
+Declare a class with @interface.
+Define a class with @implementation . It ends with @end.
+Use the @synthesize keyword to implement the property methods declared in the class interface.
 
-메소드 이름앞의 뺄셈기호(-)는 메소드가 인스턴스 메소드라는 것을 나타낸다.
-클래스 메소드 앞에는(+) 기호가 사용된다.
+Object type: id type is a generic type.
+When a property is declared using the @property keyword, to access an instance variable,
+There is no need to repeat the tedious task of declaring and implementing accessor methods one by one.
 
-자동해제 풀 : 1.메인 이벤트 루프가 시작되기전에 기본 자동해제 풀을 생성한다.
- 2. 메인 이벤트 루프가 끝나면 자동해제 풀이 제거된다.
+A minus sign (-) in front of a method name indicates that the method is an instance method.
+Class methods are preceded by a (+) sign.
+
+Auto-release pool: 1. Create a default auto-release pool before the main event loop starts.
+ 2. At the end of the main event loop, the autorelease pool is removed.
  
 alloc, retain, copy ,release 주기
 레퍼런스 카운팅 기반의 메모리 관리 : alloc, retain ,release 메소드 호출로 인한 리테인 카운트 변화를 고려해야하며
