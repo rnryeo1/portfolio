@@ -1,0 +1,385 @@
+1. Android App
+No. Title Check Contents
+1 MyDean 201230
+  -Handler()-> Modify Handler(Looper.getMainLooper())
+210112
+  -Deprecated fix
+210222
+  - Overall UI red/orange fix
+210223
+  -Fix other errors
+210224
+  -Fixed: Disabled mAttacher. Fixed the phenomenon that the entire screen appears small when the terminal and the phone are farther away (if the wifi signal is weak)
+210225
+  -english red/orange
+210226
+  - Parking priority among MP500 partition change items -> No parking completed and other errors corrected
+210309
+  -Modified UI and environment settings
+210317
+  -KakaoTalk download error (o), ui size optimization for each device (o)
+210325
+  -Orange icon real-time video 3 3 naming mistakes
+210504
+  - S9 recording list, environment settings, English support check, connection issues on the latest android phone, image addition
+210506
+  - Commit related to information environment setting
+210510
+      -.Message box UI updated. Mostly processed, text size adjustment according to text number
+210506
+- Get Git back and complete the build
+	
+2
+
+
+
+
+
+
+	UVUE
+
+	200709
+  - UVUE U9 low voltage cutoff UI changed to 2 options
+210104
+  - UVUE U9 (MP200W) ADAS information-> TEXT gray processing, this function is not supported. processing ,FF condition processing
+210311
+  - Deprecated fix
+210330
+  - file != null check, android:requestLegacyExternalStorage="true"
+210513
+ -v1.0.5 fix playback problem, delete external battery
+
+210506
+ - Get Git back and complete the build
+- 210330 Last commit confirmation
+
+
+
+
+
+
+3 Braun 200826
+ -Added vehicle number input
+200902
+ -Ssid not visible, fixed off when recording list
+201019
+-Language change PLATENUMBER (Chinese, English)
+- i530WF -> AB12345 condition added.
+201020
+  -Version only correction DEBUG false, LUX9WA condition added (vehicle number input), 6-digit password error
+201021
+  -Set the partition image to appear.
+201022
+- Change the password to 1 to 8 digits
+201029
+  -Language change PLATENUMBER (Chinese, English)
+210311
+  -Deprecated fix
+210319
+  -Deprecated fix
+210330
+  -file != check for null
+210506
+ -Get Git back and build complete
+  -210330 Last commit check.
+4 Blaupunkt 210308
+  - Deprecated fix
+210309
+  - MainMP4ParSer modified sound
+210330
+  - file != null check, android:requestLegacyExternalStorage="true"
+210506
+ -Get Git back and build complete
+ -210330 Check last commit
+5
+
+
+	CiEMS_T5
+
+
+	210408
+ -Real-time full screen fix
+210506
+ -Get Git back and build complete
+ -210408 Check last commit
+
+
+
+6 Roadeye 201202
+ -V1.1.3 VOLT value correction
+210506
+ -Get Git back and build complete
+ -201202 Check last commit
+7 Marbella 200820
+  -V1.1.4 added wi-fi on/off while parking
+200828
+  -v1.1.5 sdk 29 , -v1.1.6 version code 27
+200901
+  - Fix android 10 wifi ssid, V1.1.7 commit
+200902
+ -v1.1.8 Change speed unit, change sd card partition, change according to gc2023, imx307.
+210325
+ -Deprecated fix
+210506
+ -Get Git back and build complete
+-210325 Check last commit
+8 Neoline 210310
+ -Deprecated fix
+210330
+ -file != null check, android:requestLegacyExternalStorage="true"
+210506
+-Get Git back and build complete
+-210330 Check last commit
+9 Samsonix 200624
+  -Comment removal and code cleanup
+200625
+  -adas,timelapse,ldws check issue fixed.
+210506
+-Get Git back and build complete
+-200625 check last commit
+10 T5s_biz 210319
+  - initial commit
+210506
+  -Added language and icons. v1.0.4
+210506
+-Get Git back and build complete
+-210506 Last commit check.
+11
+
+	CIP-CAM
+
+210311
+  -CIP-CAM initial file registration, set from cipcam setting v1.0.0
+210316
+-empty str removed, item ui setting, KakaoTalk receiving error removed
+210319
+-Direct playback, direct download pop-up x
+210405
+  -json parsing
+210408
+  -Play, icon, path change, version name, etc.
+210422
+  -intro password, password change environment settings added
+210427
+  -Intro without password, modify to wi-fi password setting with json password received at the beginning
+210504
+  - 4 QC requests error handling
+210510
+      -.Message box UI updated. Mostly processed, text size adjustment according to text number
+210513
+     -v1.0.3 textbox font size adjustment
+
+210506
+-Get Git back and build complete
+-210504 Check last commit
+	
+
+
+			
+
+ 
+2. iOS App
+     No. Title Check Contents
+1 MyDean 200924
+ -Light mode setting, download error setting confirmation complete, no opt setting, adas check correction
+200928
+ -Fixed the partition.png file, fixed the problem that the partition ui did not appear on iPhone
+201013
+ -When running the video immediately, only the front is displayed, and the rear 1 and 2 are not selected in the selection Completed correction, terminal identification value initialization added, rotation to the center
+201020
+ -f100 Audio sound is broken, date change in ios14 version, screen off time, photo alignment corrected.
+201214
+ -Swift5 setting, modified to display only the screen when playing in landscape mode in real time
+
+210506
+-Last commit date: 201214 It works after receiving git.
+2 Marbella 200908
+ -Added wi-fi off at part, support dark mode x
+200914
+ -Fixed wi-fi on/off at park subtitle
+200915
+ -kr9s,kr5a, related environment setting value correction, screen brightness subtitle correction
+201201
+ -ui edit
+
+210506
+-Last commit date: 201201 It works after receiving git.
+3 Samsonix 200925
+ -no opt, light mode, download, bitrate, adas Compatibility fix by model
+200928
+ -r900 Remove bit rate, modify partition image size and location
+201012
+ - Fixed an error after playing horizontally
+210506
+-Last commit date: 201012 It works after receiving git.
+4 Neoline 200929
+ -Light mode, no opt, download error fixed, screen cut off on iphone xr, 11 fixed
+201103
+ - Fix to center the image when rotating
+ 
+
+210506
+-Last commit date: 201103 It works after receiving git.
+5 Blaupunkt 200929
+ -release no opt setting, download error setting, light mode setting
+201007
+ -Fixed that the video screen is moved upwards when switching from full screen when running the recording file right away
+201201
+ - Fixed from landscape mode to full screen
+
+210506
+-Last commit date: 201201 It works after receiving git.
+6 Braun 200903
+ -platenumber feature added, Braun App update
+200904
+ - Fixed an error where the partition selection was not displayed, and the problem that tabs were blocked in the list fixed
+200911
+ - Fixed rotation in os 13 or later, and fixed download error
+201022
+ - Edit password 1 to 8 characters
+201029
+ - Language correction (English/Chinese)
+201123
+ - auto layout
+201130
+ - 1792.0 (iphone XR, iphone11) layout condition added.
+
+210506
+-Last commit date: 201130 It works after receiving git.
+7 Hella780 200924
+ -light mode setting, download error correction, no opt setting
+200929
+ -fixed partition.png Fixed the problem that partition ui did not appear on iphone, fixed ssid
+201007
+ -Fixed that the video screen is moved upwards when switching from full screen to running the recording file right away
+
+210506
+-Last commit date: 201007 It works after receiving git.
+9 UVUE 200909
+ -Set the bitrate function not to work, add image file, check u9, u5 compatibility
+200910
+ -Fixed the rotation problem, set the story board full screen (download error)
+200911
+ -u4 (display time off, lcd bright
+201007
+ -Fixed an error that occurred after playing horizontally in uvue
+201008
+ - Fixed an error after playing horizontally
+201120
+ -constraint_layout
+
+
+210506
+-Last commit date: 201120 It works after receiving git.
+     
+ 
+3. PC Viewer
+
+No. Title Check Contents
+1 MyDean PC Viewer 200714
+  -V0.1.1Computer tab added_20200714
+200723
+  -V1.0.2_20200723_Fixed an error between moving tabs and fixed all
+210329
+  -1Fix the shutdown after zooming in, 2 file paths added
+210506
+  -IDD_MESSAGEBOX1 add
+210506
+ssh://cnslinkgit@192.168.2.90:22/volume1/homes/cnslinkgit/winos/MyDeanUI.git
+
+Get Git again and check the build and operation
+210506 MyDean PC Viewer Confirm Last Commit
+2
+
+
+
+
+
+
+
+
+
+T3 PC Viewer
+
+
+200406
+  -0.0.5 version fix
+200407
+  -Progress bar, next, previous file skip button error
+200416
+  -Blackbox,computer tab break, path file search implementation
+200417
+  -Blackbox,computer tab break, path file search implementation
+200420
+  -Drive image, computer list, etc., file path filtering, avi file display
+200421
+  -Fixed video playback between computer and black box tab movements
+200422
+  - Error when skipping tabs while playing video, sorting, park, next buttons, etc.
+200423
+  -gsensor Fixed an error when moving the path during playback, etc.
+200424
+  - Fix capture function
+200511
+  - Change full screen, click list, move computer, black box, fix loading screen error
+200518
+  - Fix screen area click part
+200526
+  -m_DriveNum removal, etc. Code cleanup
+200603
+ - Check the render part, fix the error that the computer screen does not appear
+200605
+ -Fixed the OnPlayInfoSync playback part
+200610
+ - Icon fix
+200714
+ -T3_ Fix gsensor when screen flickers, fix playback when changing path in computer tab
+200729
+ -tat add 2 lines and move the bmp picture location
+200820
+ -delete memory dump removed and changed to photo storage date
+201019
+ -Channel 1 and 2 division, setting added.
+210506
+ ssh://cnslinkgit@192.168.2.90:22/volume1/homes/cnslinkgit/winos/t3.git
+ Get Git again and check the build and working
+ 201019 Last commit confirmed.
+
+
+
+
+
+
+
+
+
+3 S9 PC Viewer 210503
+-initial commit , initial requirements , language and default behavior
+210504
+ -buf size change
+210514
+ -4ch basic setting process
+210506
+ssh://cnslinkgit@192.168.2.90:22/volume1/homes/cnslinkgit/winos/mydean.git
+Get Git again and check the build and working
+ 210504 Last commit confirmed.
+4 CIEMS T5 PC Viewer 210506
+Fixed it, but didn't commit on vmware. The vmware version video is missing. Please commit in vmware.
+Ciems T5, T5S PC Viewer has been uploaded. However, the SVN path is different.
+5 T5S PC Viewer 210506
+Fixed it, but didn't commit on vmware. The vmware version video is missing. Please commit in vmware.
+Ciems T5, T5S PC Viewer has been uploaded. However, the SVN path is different.
+6 IOS macViewer 201120 -save added, picture view added. Upload git and check the operation on the sd card
+ 
+4. ETC
+
+No. Title Check Contents
+1 PCViewer_VS_Setup_Manual
+2 The aos_key cip-cam key is produced separately.
+3 IOS Conv launcher git registration The state is not registered from the beginning.
+4 Ciems T5, T5S PC Viewer has been uploaded. However, the SVN path is different.
+5 -MediaCodec (o)
+MediaCodec argument takeover: Main modified file, VideoDecoderThread (added), VideoDecoderThread_file (added), MainFreeView (modified), MainFileFreeView (modified),
+Remove all so files (do not use code related to so files)
+6
+
