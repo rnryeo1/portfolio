@@ -31,7 +31,7 @@ UINT CMyDeanUIView::RunMakeTimeThread(LPVOID pParam)
 
 
 
-
+ 
 
 
 Black box route making algorithm core source
