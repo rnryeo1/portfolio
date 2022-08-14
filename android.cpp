@@ -956,7 +956,7 @@ TabHost 해결과정 논리  어떻게하면 더 시간절약을 할 수 있었�
 	//메인쓰레드가 MainFileFreeView로 것인가?
 안드로이드 프레임워크 내부 클래스인 android.app.ActivityThread가 애플리케이션 메인 클래스이고, ActivityThread의 main()메서드가 애플리케이션의 시작 지점이다.
 
-ActivityThread는 Activity만 관련되어 있는것이 아니라 모든 컴포넌트들이 다 관련되어 있다. (Thread를 상속 받은 class가 아니다.)
+ActivityThread는 Activity만 관련되어 있는것이 아니라 모든 컴포넌트들이 다 관련되어 있다. (Thread를 상속 받은 class가 아니다.) 
 
 public static void main(String[] args){
   SamplingProfilerIntegration.start();
