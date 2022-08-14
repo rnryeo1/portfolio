@@ -100,3 +100,4 @@ Reponsehelper.sendreturncode (res,1,0..., etc.) // When the server sends a signa
 //If the server side sends 1 as a success signal, the data is updated in sql before sending 1. After synchronization of update
 // Get the updated data (sql value) value from the server side from the client.
 ====================================================================================================================================
+ 
