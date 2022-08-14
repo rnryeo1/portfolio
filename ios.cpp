@@ -941,7 +941,7 @@ class AnotherViewController: UIViewController {
 셀렉터를 이용하여 함수 사용 : [클래스 변수 performSelector:@selector(함수이름)];
 [a performSelector:@selector(go:) withObject:(id)10];
 [a performSelector:@selector(go:speed:) withObject:(id)10 withObject:(id)10];
-withObject는 2개까지 지원
+withObject는 2개까지 지원 
  
 2. Selector는 함수 포인터다?
 제목에서 알 수 있듯이 잘못됌
