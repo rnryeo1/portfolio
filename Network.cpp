@@ -1,4 +1,4 @@
-Server Basic Knowledge Packet Sending
+서버 기본 지식 패킷 전송
 
 
 // Winsock reset
@@ -82,7 +82,7 @@ return 0;
 
 
 ====================================================================================================================================
-07 db, sql, js server-side code Understanding and explaining the content of server-side separation (the process of understanding server-side separation and connection)
+07 db, sql, js 서버측 코드 서버측 분리 내용 이해 및 설명(서버측 분리 및 연결을 이해하는 과정)
 
 App.post("name",function(req,res){
 Dbconnect.getConnection(async function(connect){/dbConnection
