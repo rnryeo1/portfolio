@@ -1,5 +1,5 @@
-3) ios async, platenum, send, recv, theory theorem, etc.
-IOS data exchange and UI update method (async) of IOS are organized
+3) ios async, platenum, send, recv, 이론 정리 등
+IOS의 데이터 교환 및 IOS의 UI 업데이트 방식(async)이 정리되어 있습니다.
 
 func parseGetPlateNumber(_ data : [UInt8] ) {
     print("\(WHAT_CLASS):\(#function):\(#line)")
