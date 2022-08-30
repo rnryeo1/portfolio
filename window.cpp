@@ -1,20 +1,19 @@
 
  
 
-Black box route making algorithm core source and description and thread arrangement
-1. The beginning of the path (drive path, A, B, C drive, etc.) is expressed by the m_bRootDir variable.
-2.pdr,cdr,avi,directory Only files are visible.
-3. As you enter the path, m_CurrentDir continues to be appended to the path name. And save the old path.
-4. When exiting from the current path, the previous path is replaced with the previously saved path. And the current directory variable, which is a CString variable, is also replaced with a "" space character. If the path continues to be added
-If the path becomes too long, an error occurs because the CString variable cannot store that much string data.
-5. CWinThread* m_pThread; Create a variable m_pThread = AfxBeginThread(RunThread, this);
-5-1. AfxBeginThread creates a file reading thread called RunThread and runs it in the background. It uses worker threads to operate in a multi-threaded environment.
+블랙박스 경로 작성 알고리즘 핵심 소스 및 설명 및 스레드 배열
+1. 경로의 시작(드라이브 경로, A, B, C 드라이브 등)은 m_bRootDir 변수로 표현됩니다.
+2.pdr,cdr,avi,directory 파일만 보입니다.
+3. 경로를 입력하면 m_CurrentDir이 경로 이름에 계속 추가됩니다. 그리고 이전 경로를 저장합니다.
+4. 현재 경로에서 나갈 때 이전 경로는 이전에 저장한 경로로 대체됩니다. 그리고 CString 변수인 현재 디렉토리 변수도 "" 공백 문자로 대체됩니다. 경로가 계속 추가되면
+경로가 너무 길어지면 CString 변수가 그만큼의 문자열 데이터를 저장할 수 없기 때문에 오류가 발생합니다.
+5. CWinThread* m_pThread; 변수 만들기 m_pThread = AfxBeginThread(RunThread, this);
+5-1. AfxBeginThread는 RunThread라는 파일 읽기 스레드를 만들고 백그라운드에서 실행합니다. 작업자 스레드를 사용하여 다중 스레드 환경에서 작동합니다.
 6. CWinThread* m_pMakeTimeThread;
  m_pMakeTimeThread = AfxBeginThread(RunMakeTimeThread, this);
-Because RunMakeTimeThread function is a file reading function, it should be processed as a thread.
-This is because when the main thread processes everything, the read speed becomes significantly slower.
-processing source in the background
-
+RunMakeTimeThread 함수는 파일 읽기 함수이므로 스레드로 처리해야 합니다.
+메인 스레드가 모든 것을 처리할 때 읽기 속도가 현저히 느려지기 때문입니다.
+백그라운드에서 소스 처리
 static UINT RunMakeTimeThread(LPVOID pParam);
 
 UINT CMyDeanUIView::RunMakeTimeThread(LPVOID pParam)
@@ -34,7 +33,8 @@ UINT CMyDeanUIView::RunMakeTimeThread(LPVOID pParam)
  
 
 
-Black box route making algorithm core source
+
+블랙박스 경로 생성 알고리즘 핵심 소스
 
 void Computer::OnDblclkList1(NMHDR* pNMHDR, LRESULT* pResult)
 {
@@ -417,6 +417,19 @@ Use PostMessage or SendMessage to deliver a message to the UI thread.
 User-Interface Thread
 Handles 'visible tasks' such as updating the screen or being drawn.
 Responsible for event handling of the control.
+MFC는 사용자 인터페이스 스레드와 작업자 스레드의 두 가지 유형의 스레드를 구분합니다.
+사용자 인터페이스 스레드 개체의 예는 MFC의 주 스레드인 CWinApp입니다.
+작업자 스레드는 백그라운드 작업 또는 유지 관리 작업에 적합합니다.
+
+
+작업자 스레드
+특정 작업이나 작업에 대한 스레드입니다.
+UI 컨트롤에 직접 액세스하는 것은 권장되지 않습니다.
+PostMessage 또는 SendMessage를 사용하여 UI 스레드에 메시지를 전달합니다.
+사용자 인터페이스 스레드
+화면 업데이트 또는 그리기와 같은 '보이는 작업'을 처리합니다.
+컨트롤의 이벤트 처리를 담당합니다.
+	
 
 
 When the user enters a command, the terminal interprets and executes the entered command. And print the result to the screen. Then look at the output screen
@@ -429,6 +442,16 @@ A background function allows other processes to run while the process is running
 If a command is executed in the background method, the next command can be executed immediately. You can continue working in the foreground while running multiple tasks as needed at the same time.
 Background tasks can perform multiple tasks at the same time by using the background in case the processing of the corresponding command takes a long time.
 
+사용자가 명령을 입력하면 단말은 입력된 명령을 해석하여 실행합니다. 그리고 결과를 화면에 출력합니다. 그런 다음 출력 화면을보십시오
+명령을 다시 입력하는 것은 대화식 작업입니다. 포그라운드 방식에서 입력 명령 실행은 결과가 나타날 때까지 기다립니다.
+포그라운드 프로세스라고 하며, 작업 제어 측면에서 포그라운드 작업이라고 합니다.
+포그라운드 작업은 다른 명령을 입력할 수 없으며 기다려야 합니다. 일반적인 명령은 실행하는 것입니다.
+
+
+백그라운드 기능을 사용하면 프로세스가 실행되는 동안 다른 프로세스를 실행할 수 있습니다. 이것은 하나의 쉘에서 동시에 여러 프로세스를 실행할 수 있는 방법입니다.
+백그라운드 방식으로 명령어를 실행하면 바로 다음 명령어를 실행할 수 있다. 동시에 필요에 따라 여러 작업을 실행하면서 포그라운드에서 계속 작업할 수 있습니다.
+백그라운드 작업은 해당 명령의 처리 시간이 오래 걸리는 경우 백그라운드를 사용하여 동시에 여러 작업을 수행할 수 있습니다.
+	
 
 Understanding SendMessage & PostMessage
 SendMessage directly calls a window procedure and does not return until the procedure processes the message. That is, when another function is called within a function,
@@ -445,7 +468,20 @@ It is difficult to predict when the message will be processed.
  process sequentially process not sequentially
  synchronous Asynchronous
 
+SendMessage 및 PostMessage 이해하기
+SendMessage는 창 프로시저를 직접 호출하고 프로시저가 메시지를 처리할 때까지 반환하지 않습니다. 즉, 함수 내에서 다른 함수가 호출될 때,
+함수가 반환될 때까지 기다려야 하는 것처럼 일반 함수 호출과 동일하게 작동합니다.
+PostMessage에서 호출된 메시지는 메시지 큐에 넣고 창 프로시저는 이 메시지를 처리합니다. 이것이 의미하는 바는 메시지가 즉시 처리되지 않는다는 것입니다.
+GetMessage()에 의해 해석된 메시지는 처리를 위해 DispatchMessage()에 의해 창 프로시저에 전달됩니다. 따라서 PostMessage가 전달하는 메시지는
+언제 처리될지 예측하기 어렵습니다.
+두 함수의 차이점을 요약하면 다음과 같습니다.
 
+ SendMessage 포스트메시지
+
+창 프로시저를 직접 호출하고 프로시저가 메시지를 처리할 때까지 반환하지 않습니다. 메시지는 메시지 큐에 삽입되고 메시지는 창 프로시저에서 처리됩니다.
+메시지가 처리될 시기를 예측하기 어렵습니다.
+ 순차적으로 처리 순차적으로 처리하지 않음
+ 동기 비동기
 
 
 Windows Debugging All Methods
@@ -460,3 +496,14 @@ Ouput
 Breakpoints
 Create a problem and click try again
 
+모든 방법을 디버깅하는 Windows
+디버그 호출 스택, 문제 지점에서 재시도->중점, 중단점, 오류 목록, 출력, 참조
+1 문제 지점에서 재시도
+2개의 중단점
+3callstack(아래에서 위로 보기)
+4. 나머지 등을 활용한다.
+__________________________________________________________
+호출 스택(아래에서 위로 보기)
+출력
+중단점
+문제를 만들고 다시 시도를 클릭하세요.
