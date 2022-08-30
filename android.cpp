@@ -4,7 +4,7 @@ for (int i = 0; i < data.length; i++) {
     if (i > 3 && i < 12) {
         output.write(data[i]);
     }
-}
+} 
 byte[] result = output.toByteArray();
 activity.strPlateNumber = new String(result);
 activity.strPlateNumber_Save = activity.strPlateNumber;
