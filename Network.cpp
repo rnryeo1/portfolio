@@ -1,7 +1,7 @@
 서버 기본 지식 패킷 전송
 
 
-// Winsock reset
+// Winsock reset 
 WSADATA wsa;
 int retval;
 if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0) //2.2version
